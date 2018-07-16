@@ -6,9 +6,6 @@ from tensorflow.contrib.layers import fully_connected
 from math import floor, ceil
 from pylab import rcParams
 from time import gmtime, strftime
-#from tensorflow.examples.tutorials.mnist import input_data
-#mnist = input_data.read_data_sets("/tmp/data/")
-
 
 
 # quantidade de exemplos que serão usados para treino
@@ -21,22 +18,16 @@ cl_negativas = pd.read_csv("trabFinal/dataset_ia_negativos_2.csv", sep=",")
 # juntando todos os nossos exemplos
 exemplos = cl_positivas.append(cl_negativas)
 
-# misturando os exemplos para motivos de treinamento
+# misturando os exemplos pq queremos ver exemplos positivos e negativos
+# na saida
 exemplos = exemplos.sample(frac=1).reset_index(drop=True)
-#print(exemplos.shape)
-#print(exemplos["hd(X)"])
 
-################################################################
 # função para codificar nossos exemplos e labels em vetores "one-hot"
 def encode(series):
     return  pd.get_dummies(series.astype(str))
 
 exemplos_xplain = exemplos.drop('hd(X)',1)
 exemplos_y = encode(exemplos['hd(X)'])
-#exemplos_y = exemplos['hd(X)']
-#print(exemplos_xplain.shape)
-
-################################################################
 
 # separando nosso dataset em dados de treino e dados de teste
 cnt_treino = floor(exemplos_xplain.shape[0] * tam_treino)
